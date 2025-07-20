@@ -9,22 +9,22 @@ const Home = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <h1 className="text-4xl font-bold text-gray-800 dark:text-white">
+      <h1 className="text-4xl font-bold font-serif text-gray-800 tracking-tighter leading-relaxed">
         Recipe & Meal Planner
       </h1>
-      <p className="text-lg text-gray-600 dark:text-gray-300">
+      <p className="text-lg font-semibold font-serif text-gray-700 tracking-tight leading-tights">
         Plan meals, track nutrition, and generate shopping lists easily.
       </p>
       <div className="flex justify-center gap-4">
         <Link
           to="/recipes"
-          className="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700"
+          className="bg-indigo-400 text-white px-4 py-2 rounded-xl hover:bg-indigo-700"
         >
           Browse Recipes
         </Link>
         <Link
           to="/planner"
-          className="bg-green-600 text-white px-4 py-2 rounded-xl hover:bg-green-700"
+          className="bg-yellow-600 text-white px-4 py-2 rounded-xl hover:bg-yellow-700"
         >
           Meal Planner
         </Link>
