@@ -9,7 +9,7 @@ const Home = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <h1 className="text-4xl font-extrabold font-serif text-orange-300 tracking-tighter leading-relaxed relative">
+      <h1 className="text-5xl font-extrabold font-serif text-orange-400 tracking-tighter leading-relaxed relative">
         Recipe & Meal Planner
       </h1>
       <p className="text-lg font-semibold font-serif text-white tracking-tight leading-tights">
