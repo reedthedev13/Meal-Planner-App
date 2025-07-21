@@ -1,17 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 
 type Meal = "Breakfast" | "Lunch" | "Dinner";
 
 type PlannedMeal = {
   day: number;
   meal: Meal;
-  recipeId: string;
   recipeTitle: string;
 };
 
 type MealPlannerProps = {
   plannedMeals: PlannedMeal[];
-  onAddMeal: (day: number, meal: Meal) => void;
+  onAddMeal: (day: number, meal: Meal, recipeTitle: string) => void;
   onRemoveMeal: (day: number, meal: Meal) => void;
 };
 
@@ -23,6 +22,31 @@ const MealPlanner: React.FC<MealPlannerProps> = ({
   onAddMeal,
   onRemoveMeal,
 }) => {
+  // Local state to track which cell is currently being edited
+  const [addingCell, setAddingCell] = useState<{
+    day: number;
+    meal: Meal;
+  } | null>(null);
+  const [inputValue, setInputValue] = useState("");
+
+  const startAdding = (day: number, meal: Meal) => {
+    setAddingCell({ day, meal });
+    setInputValue("");
+  };
+
+  const submitMeal = () => {
+    if (addingCell && inputValue.trim() !== "") {
+      onAddMeal(addingCell.day, addingCell.meal, inputValue.trim());
+      setAddingCell(null);
+      setInputValue("");
+    }
+  };
+
+  const cancelAdding = () => {
+    setAddingCell(null);
+    setInputValue("");
+  };
+
   return (
     <div className="overflow-x-auto">
       <table className="table-fixed w-full border-collapse border border-[#3d3d42] text-[#fefefe]">
@@ -50,6 +74,9 @@ const MealPlanner: React.FC<MealPlannerProps> = ({
                   (m) => m.day === dayIndex && m.meal === meal
                 );
 
+                const isAdding =
+                  addingCell?.day === dayIndex && addingCell?.meal === meal;
+
                 return (
                   <td
                     key={dayIndex}
@@ -68,9 +95,38 @@ const MealPlanner: React.FC<MealPlannerProps> = ({
                           Remove
                         </button>
                       </div>
+                    ) : isAdding ? (
+                      <div>
+                        <input
+                          type="text"
+                          className="w-full p-1 rounded border border-[#ffb86b] text-[#1b1b1f]"
+                          placeholder="Recipe title"
+                          value={inputValue}
+                          onChange={(e) => setInputValue(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") submitMeal();
+                            if (e.key === "Escape") cancelAdding();
+                          }}
+                          autoFocus
+                        />
+                        <div className="flex justify-between mt-1">
+                          <button
+                            onClick={submitMeal}
+                            className="text-[#ffb86b] hover:underline text-sm"
+                          >
+                            Save
+                          </button>
+                          <button
+                            onClick={cancelAdding}
+                            className="text-[#ffb86b] hover:underline text-sm"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
                     ) : (
                       <button
-                        onClick={() => onAddMeal(dayIndex, meal)}
+                        onClick={() => startAdding(dayIndex, meal)}
                         className="text-sm text-[#ffb86b] hover:underline"
                       >
                         + Add

@@ -13,7 +13,7 @@ const Home = () => {
         Recipe & Meal Planner
       </h1>
       <p className="text-lg font-semibold font-serif text-gray-700 tracking-tight leading-tights">
-        Plan meals, track nutrition, and generate shopping lists easily.
+        Plan meals weekly, track nutrition, and create shopping lists easily.
       </p>
       <div className="flex justify-center gap-4">
         <Link

@@ -25,7 +25,7 @@ const RecipeForm: React.FC<RecipeFormProps> = ({
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // Reset form if initialData changes
+    // Reset form if initialData changes (for edit use cases)
     setTitle(initialData?.title || "");
     setDescription(initialData?.description || "");
     setImageUrl(initialData?.imageUrl || "");
@@ -33,11 +33,14 @@ const RecipeForm: React.FC<RecipeFormProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!title.trim()) {
       setError("Title is required.");
       return;
     }
+
     setError("");
+    // Simply pass data up to parent, no backend interaction here
     onSubmit({
       title: title.trim(),
       description: description.trim(),

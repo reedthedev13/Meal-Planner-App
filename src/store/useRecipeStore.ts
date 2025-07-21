@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { fetchRecipes as fetchRecipesFromApi } from "../api/recipeApi";
 
 export type Recipe = {
   id: string;
@@ -33,11 +34,13 @@ export const useRecipeStore = create<RecipeStore>((set, get) => ({
   fetchRecipes: async () => {
     set({ loading: true, error: null });
     try {
-      const res = await fetch("/api/recipes"); // adjust to your backend
-      const data = await res.json();
-      set({ recipes: data, loading: false });
+      const recipes = await fetchRecipesFromApi(); // call your api util
+      set({ recipes, loading: false });
     } catch (err: any) {
-      set({ error: err.message || "Failed to fetch recipes", loading: false });
+      set({
+        error: err.message || "Failed to fetch recipes",
+        loading: false,
+      });
     }
   },
 

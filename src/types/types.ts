@@ -1,6 +1,7 @@
 export type Meal = "Breakfast" | "Lunch" | "Dinner";
 
 export type PlannedMeal = {
+  id: string;
   day: number;
   meal: Meal;
   recipeId: string;
@@ -12,4 +13,6 @@ export type Recipe = {
   title: string;
   description?: string;
   imageUrl?: string;
+  ingredients: string[];
+  instructions: string;
 };
