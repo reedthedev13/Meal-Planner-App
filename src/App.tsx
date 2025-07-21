@@ -3,9 +3,11 @@ import AppRouter from "./routes/AppRouter";
 
 function App() {
   return (
-    <Router>
-      <AppRouter />
-    </Router>
+    <div className="bg-slate-900 min-h-screen">
+      <Router>
+        <AppRouter />
+      </Router>
+    </div>
   );
 }
 

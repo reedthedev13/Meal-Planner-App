@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Trash2 } from "lucide-react";
 
 type Recipe = {
   id: number;
@@ -102,6 +103,10 @@ const Recipes = () => {
     setError("");
   };
 
+  const handleDelete = (id: number) => {
+    setRecipes((prev) => prev.filter((recipe) => recipe.id !== id));
+  };
+
   return (
     <motion.div
       className="max-w-5xl mx-auto p-6 space-y-6"
@@ -109,7 +114,7 @@ const Recipes = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
-      <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
+      <h2 className="text-3xl font-bold text-white font-serif ">
         Your Recipes
       </h2>
 
@@ -117,7 +122,7 @@ const Recipes = () => {
         {recipes.map((recipe) => (
           <div
             key={recipe.id}
-            className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4 space-y-2"
+            className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4 space-y-2 relative"
           >
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
               {recipe.title}
@@ -134,6 +139,13 @@ const Recipes = () => {
             <p className="text-sm text-gray-500 dark:text-gray-300">
               Ingredients: {recipe.ingredients.join(", ")}
             </p>
+            <button
+              onClick={() => handleDelete(recipe.id)}
+              className="flex items-center gap-1 mt-2 text-white bg-red-600 hover:bg-red-700 transition px-3 py-1 rounded-full text-sm"
+            >
+              <Trash2 className="w-4 h-4" />
+              Delete
+            </button>
           </div>
         ))}
 
