@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const weekDays = [
   "Monday",
@@ -79,6 +80,15 @@ const Planner = () => {
       [day]: prev[day].filter((_, i) => i !== index),
     }));
   };
+
+  const HomeButton = () => (
+    <Link
+      to="/"
+      className="inline-block bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition"
+    >
+      Home
+    </Link>
+  );
 
   return (
     <motion.div
@@ -195,6 +205,7 @@ const Planner = () => {
           </div>
         ))}
       </div>
+      <HomeButton />
     </motion.div>
   );
 };

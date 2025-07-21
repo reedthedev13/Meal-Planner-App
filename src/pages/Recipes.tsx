@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Trash2 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 type Recipe = {
   id: number;
@@ -107,6 +108,15 @@ const Recipes = () => {
     setRecipes((prev) => prev.filter((recipe) => recipe.id !== id));
   };
 
+  const HomeButton = () => (
+    <Link
+      to="/"
+      className="inline-block bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition"
+    >
+      Home
+    </Link>
+  );
+
   return (
     <motion.div
       className="max-w-5xl mx-auto p-6 space-y-6"
@@ -117,7 +127,6 @@ const Recipes = () => {
       <h2 className="text-3xl font-bold text-white font-serif ">
         Your Recipes
       </h2>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {recipes.map((recipe) => (
           <div
@@ -208,7 +217,6 @@ const Recipes = () => {
           </div>
         )}
       </div>
-
       {!isAdding && (
         <button
           onClick={startAdding}
@@ -216,7 +224,8 @@ const Recipes = () => {
         >
           + Add Recipe
         </button>
-      )}
+      )}{" "}
+      <HomeButton />
     </motion.div>
   );
 };
