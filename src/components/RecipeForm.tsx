@@ -4,6 +4,9 @@ type RecipeFormData = {
   title: string;
   description?: string;
   imageUrl?: string;
+  calories?: number;
+  protein?: number;
+  ingredients?: string;
 };
 
 type RecipeFormProps = {
@@ -22,29 +25,37 @@ const RecipeForm: React.FC<RecipeFormProps> = ({
     initialData?.description || ""
   );
   const [imageUrl, setImageUrl] = useState(initialData?.imageUrl || "");
+  const [calories, setCalories] = useState(initialData?.calories || 0);
+  const [protein, setProtein] = useState(initialData?.protein || 0);
+  const [ingredients, setIngredients] = useState(
+    initialData?.ingredients || ""
+  );
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // Reset form if initialData changes (for edit use cases)
     setTitle(initialData?.title || "");
     setDescription(initialData?.description || "");
     setImageUrl(initialData?.imageUrl || "");
+    setCalories(initialData?.calories || 0);
+    setProtein(initialData?.protein || 0);
+    setIngredients(initialData?.ingredients || "");
   }, [initialData]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!title.trim()) {
       setError("Title is required.");
       return;
     }
 
     setError("");
-    // Simply pass data up to parent, no backend interaction here
     onSubmit({
       title: title.trim(),
       description: description.trim(),
       imageUrl: imageUrl.trim(),
+      calories,
+      protein,
+      ingredients: ingredients.trim(),
     });
   };
 
@@ -59,10 +70,11 @@ const RecipeForm: React.FC<RecipeFormProps> = ({
 
       {error && <p className="text-red-500 font-medium">{error}</p>}
 
+      {/* Title */}
       <div>
         <label
-          className="block mb-1 font-medium text-[#f8f8f2]"
           htmlFor="title"
+          className="block mb-1 font-medium text-[#f8f8f2]"
         >
           Title <span className="text-red-500">*</span>
         </label>
@@ -77,10 +89,11 @@ const RecipeForm: React.FC<RecipeFormProps> = ({
         />
       </div>
 
+      {/* Description */}
       <div>
         <label
-          className="block mb-1 font-medium text-[#f8f8f2]"
           htmlFor="description"
+          className="block mb-1 font-medium text-[#f8f8f2]"
         >
           Description
         </label>
@@ -94,10 +107,11 @@ const RecipeForm: React.FC<RecipeFormProps> = ({
         />
       </div>
 
+      {/* Image URL */}
       <div>
         <label
-          className="block mb-1 font-medium text-[#f8f8f2]"
           htmlFor="imageUrl"
+          className="block mb-1 font-medium text-[#f8f8f2]"
         >
           Image URL
         </label>
@@ -111,6 +125,63 @@ const RecipeForm: React.FC<RecipeFormProps> = ({
         />
       </div>
 
+      {/* Calories */}
+      <div>
+        <label
+          htmlFor="calories"
+          className="block mb-1 font-medium text-[#f8f8f2]"
+        >
+          Calories
+        </label>
+        <input
+          id="calories"
+          type="number"
+          value={calories}
+          onChange={(e) => setCalories(Number(e.target.value))}
+          className="w-full rounded-md bg-[#1e1b17] border border-[#555555] text-[#fefae0] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#ffb86b]"
+          placeholder="e.g. 450"
+          min={0}
+        />
+      </div>
+
+      {/* Protein */}
+      <div>
+        <label
+          htmlFor="protein"
+          className="block mb-1 font-medium text-[#f8f8f2]"
+        >
+          Protein (grams)
+        </label>
+        <input
+          id="protein"
+          type="number"
+          value={protein}
+          onChange={(e) => setProtein(Number(e.target.value))}
+          className="w-full rounded-md bg-[#1e1b17] border border-[#555555] text-[#fefae0] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#ffb86b]"
+          placeholder="e.g. 30"
+          min={0}
+        />
+      </div>
+
+      {/* Ingredients */}
+      <div>
+        <label
+          htmlFor="ingredients"
+          className="block mb-1 font-medium text-[#f8f8f2]"
+        >
+          Ingredients
+        </label>
+        <textarea
+          id="ingredients"
+          value={ingredients}
+          onChange={(e) => setIngredients(e.target.value)}
+          className="w-full rounded-md bg-[#1e1b17] border border-[#555555] text-[#fefae0] px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#ffb86b]"
+          placeholder="List ingredients, one per line or comma separated"
+          rows={4}
+        />
+      </div>
+
+      {/* Buttons */}
       <div className="flex justify-end space-x-4">
         {onCancel && (
           <button
