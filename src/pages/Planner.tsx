@@ -11,8 +11,15 @@ const weekDays = [
   "Sunday",
 ];
 
+type Meal = {
+  title: string;
+  calories: number;
+  protein: number;
+  ingredients: string[]; // list of ingredients
+};
+
 type MealsByDay = {
-  [day: string]: string[]; // array of meal titles per day
+  [day: string]: Meal[];
 };
 
 const Planner = () => {
@@ -24,7 +31,12 @@ const Planner = () => {
   );
 
   const [addingForDay, setAddingForDay] = useState<string | null>(null);
-  const [newMealTitle, setNewMealTitle] = useState("");
+  const [form, setForm] = useState({
+    title: "",
+    calories: "",
+    protein: "",
+    ingredients: "",
+  });
 
   useEffect(() => {
     document.title = "Meal Planner";
@@ -32,25 +44,33 @@ const Planner = () => {
 
   const startAdding = (day: string) => {
     setAddingForDay(day);
-    setNewMealTitle("");
+    setForm({ title: "", calories: "", protein: "", ingredients: "" });
   };
 
   const cancelAdding = () => {
     setAddingForDay(null);
-    setNewMealTitle("");
+    setForm({ title: "", calories: "", protein: "", ingredients: "" });
   };
 
   const saveMeal = () => {
-    if (!newMealTitle.trim()) return;
-    if (!addingForDay) return;
+    if (!addingForDay || !form.title.trim()) return;
+
+    const newMeal: Meal = {
+      title: form.title.trim(),
+      calories: Number(form.calories),
+      protein: Number(form.protein),
+      ingredients: form.ingredients
+        .split(",")
+        .map((ing) => ing.trim())
+        .filter(Boolean),
+    };
 
     setMeals((prev) => ({
       ...prev,
-      [addingForDay]: [...prev[addingForDay], newMealTitle.trim()],
+      [addingForDay]: [...prev[addingForDay], newMeal],
     }));
 
-    setAddingForDay(null);
-    setNewMealTitle("");
+    cancelAdding();
   };
 
   const removeMeal = (day: string, index: number) => {
@@ -75,7 +95,7 @@ const Planner = () => {
         {weekDays.map((day) => (
           <div
             key={day}
-            className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4 space-y-2"
+            className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4 space-y-3"
           >
             <h3 className="text-lg font-semibold text-gray-700 dark:text-white">
               {day}
@@ -87,45 +107,78 @@ const Planner = () => {
               </div>
             )}
 
-            <ul className="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300">
+            <ul className="space-y-2">
               {meals[day].map((meal, idx) => (
-                <li key={idx} className="flex justify-between items-center">
-                  <span>{meal}</span>
-                  <button
-                    onClick={() => removeMeal(day, idx)}
-                    className="text-xs text-red-500 hover:underline ml-2"
-                    aria-label={`Remove meal ${meal} from ${day}`}
-                  >
-                    Remove
-                  </button>
+                <li
+                  key={idx}
+                  className="border border-gray-300 dark:border-gray-600 rounded-xl p-3 text-sm text-gray-800 dark:text-gray-200"
+                >
+                  <div className="flex justify-between items-center">
+                    <span className="font-semibold">{meal.title}</span>
+                    <button
+                      onClick={() => removeMeal(day, idx)}
+                      className="text-xs text-red-500 hover:underline ml-2"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                  <div className="text-xs mt-1">
+                    Calories: {meal.calories} | Protein: {meal.protein}g
+                  </div>
+                  <div className="text-xs mt-1 italic text-gray-500">
+                    Ingredients: {meal.ingredients.join(", ")}
+                  </div>
                 </li>
               ))}
             </ul>
 
             {addingForDay === day ? (
-              <div className="mt-2 flex flex-col space-y-2">
+              <div className="mt-3 space-y-2">
                 <input
                   type="text"
-                  autoFocus
-                  placeholder="Enter meal name"
-                  className="rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-gray-900  focus:outline-none focus:ring-2 focus:ring-blue-600"
-                  value={newMealTitle}
-                  onChange={(e) => setNewMealTitle(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") saveMeal();
-                    if (e.key === "Escape") cancelAdding();
-                  }}
+                  placeholder="Meal title"
+                  value={form.title}
+                  onChange={(e) => setForm({ ...form, title: e.target.value })}
+                  className="w-full rounded-md border px-3 py-2 text-sm"
                 />
+                <input
+                  type="number"
+                  placeholder="Calories"
+                  value={form.calories}
+                  onChange={(e) =>
+                    setForm({ ...form, calories: e.target.value })
+                  }
+                  className="w-full rounded-md border px-3 py-2 text-sm"
+                />
+                <input
+                  type="number"
+                  placeholder="Protein (g)"
+                  value={form.protein}
+                  onChange={(e) =>
+                    setForm({ ...form, protein: e.target.value })
+                  }
+                  className="w-full rounded-md border px-3 py-2 text-sm"
+                />
+                <input
+                  type="text"
+                  placeholder="Ingredients (comma separated)"
+                  value={form.ingredients}
+                  onChange={(e) =>
+                    setForm({ ...form, ingredients: e.target.value })
+                  }
+                  className="w-full rounded-md border px-3 py-2 text-sm"
+                />
+
                 <div className="flex space-x-2">
                   <button
                     onClick={saveMeal}
-                    className="flex-grow bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition"
+                    className="flex-grow bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700"
                   >
                     Save
                   </button>
                   <button
                     onClick={cancelAdding}
-                    className="flex-grow bg-gray-400 text-gray-800 px-4 py-2 rounded-xl hover:bg-gray-500 transition"
+                    className="flex-grow bg-gray-400 text-gray-800 px-4 py-2 rounded-xl hover:bg-gray-500"
                   >
                     Cancel
                   </button>

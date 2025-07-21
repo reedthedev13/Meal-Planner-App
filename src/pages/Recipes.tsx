@@ -5,12 +5,36 @@ type Recipe = {
   id: number;
   title: string;
   servings: number;
+  calories: number;
+  protein: number;
+  ingredients: string[];
 };
 
 const dummyRecipes: Recipe[] = [
-  { id: 1, title: "Spaghetti Bolognese", servings: 4 },
-  { id: 2, title: "Chicken Stir Fry", servings: 2 },
-  { id: 3, title: "Veggie Tacos", servings: 3 },
+  {
+    id: 1,
+    title: "Spaghetti Bolognese",
+    servings: 4,
+    calories: 600,
+    protein: 25,
+    ingredients: ["Spaghetti", "Beef", "Tomato Sauce"],
+  },
+  {
+    id: 2,
+    title: "Chicken Stir Fry",
+    servings: 2,
+    calories: 450,
+    protein: 30,
+    ingredients: ["Chicken", "Vegetables", "Soy Sauce"],
+  },
+  {
+    id: 3,
+    title: "Veggie Tacos",
+    servings: 3,
+    calories: 350,
+    protein: 12,
+    ingredients: ["Tortilla", "Beans", "Lettuce", "Cheese"],
+  },
 ];
 
 const Recipes = () => {
@@ -18,6 +42,9 @@ const Recipes = () => {
   const [isAdding, setIsAdding] = useState(false);
   const [newTitle, setNewTitle] = useState("");
   const [newServings, setNewServings] = useState(1);
+  const [newCalories, setNewCalories] = useState(0);
+  const [newProtein, setNewProtein] = useState(0);
+  const [newIngredients, setNewIngredients] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -28,6 +55,9 @@ const Recipes = () => {
     setIsAdding(true);
     setNewTitle("");
     setNewServings(1);
+    setNewCalories(0);
+    setNewProtein(0);
+    setNewIngredients("");
     setError("");
   };
 
@@ -45,13 +75,30 @@ const Recipes = () => {
       setError("Servings must be at least 1.");
       return;
     }
+
+    const ingredientsArray = newIngredients
+      .split(",")
+      .map((i) => i.trim())
+      .filter((i) => i !== "");
+
     setRecipes((prev) => [
       ...prev,
-      { id: Date.now(), title: newTitle.trim(), servings: newServings },
+      {
+        id: Date.now(),
+        title: newTitle.trim(),
+        servings: newServings,
+        calories: newCalories,
+        protein: newProtein,
+        ingredients: ingredientsArray,
+      },
     ]);
+
     setIsAdding(false);
     setNewTitle("");
     setNewServings(1);
+    setNewCalories(0);
+    setNewProtein(0);
+    setNewIngredients("");
     setError("");
   };
 
@@ -70,21 +117,32 @@ const Recipes = () => {
         {recipes.map((recipe) => (
           <div
             key={recipe.id}
-            className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4"
+            className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4 space-y-2"
           >
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
               {recipe.title}
             </h3>
-            <p className="text-gray-500 text-sm">Servings: {recipe.servings}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-300">
+              Servings: {recipe.servings}
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-300">
+              Calories: {recipe.calories}
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-300">
+              Protein: {recipe.protein}g
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-300">
+              Ingredients: {recipe.ingredients.join(", ")}
+            </p>
           </div>
         ))}
 
         {isAdding && (
-          <div className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4 flex flex-col space-y-4">
+          <div className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4 space-y-3">
             <input
               type="text"
               placeholder="Recipe title"
-              className="rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full rounded-md border px-3 py-2"
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
               autoFocus
@@ -93,23 +151,44 @@ const Recipes = () => {
               type="number"
               min={1}
               placeholder="Servings"
-              className="rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full rounded-md border px-3 py-2"
               value={newServings}
               onChange={(e) => setNewServings(Number(e.target.value))}
             />
-            {error && (
-              <p className="text-red-500 font-medium text-sm">{error}</p>
-            )}
+            <input
+              type="number"
+              min={0}
+              placeholder="Calories"
+              className="w-full rounded-md border px-3 py-2"
+              value={newCalories}
+              onChange={(e) => setNewCalories(Number(e.target.value))}
+            />
+            <input
+              type="number"
+              min={0}
+              placeholder="Protein (g)"
+              className="w-full rounded-md border px-3 py-2"
+              value={newProtein}
+              onChange={(e) => setNewProtein(Number(e.target.value))}
+            />
+            <input
+              type="text"
+              placeholder="Ingredients (comma separated)"
+              className="w-full rounded-md border px-3 py-2"
+              value={newIngredients}
+              onChange={(e) => setNewIngredients(e.target.value)}
+            />
+            {error && <p className="text-red-500 text-sm">{error}</p>}
             <div className="flex space-x-3">
               <button
                 onClick={saveRecipe}
-                className="flex-grow bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition"
+                className="flex-grow bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700"
               >
                 Save
               </button>
               <button
                 onClick={cancelAdding}
-                className="flex-grow bg-gray-400 text-gray-800 px-4 py-2 rounded-xl hover:bg-gray-500 transition"
+                className="flex-grow bg-gray-400 text-gray-800 px-4 py-2 rounded-xl hover:bg-gray-500"
               >
                 Cancel
               </button>
