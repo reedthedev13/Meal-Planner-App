@@ -33,33 +33,31 @@ const ShoppingList = () => {
     setError("");
   };
 
-  const HomeButton = () => (
-    <Link
-      to="/"
-      className="inline-block bg-blue-600 text-white px-2 py-2 rounded-xl hover:bg-blue-700 transition"
-    >
-      Home
-    </Link>
-  );
-
   return (
     <motion.div
-      className="max-w-4xl mx-auto p-6 space-y-6"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.4 }}
+      className="max-w-4xl mx-auto px-6 py-10 space-y-10"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
     >
-      <h2 className="text-3xl font-bold text-gray-800 dark:text-white font-serif">
-        Shopping List
-      </h2>
+      <div className="text-center space-y-3">
+        <h2 className="text-4xl font-extrabold text-gray-800 dark:text-white tracking-tight google-sans-code" >
+          🛒 Your Shopping List
+        </h2>
+        <p className="text-gray-600 dark:text-gray-300 text-lg google-sans-code tracking-tighter">
+          Keep track of ingredients for your meals
+        </p>
+      </div>
 
       <ul className="space-y-3">
         {shoppingList.map((item, index) => (
           <li
             key={index}
-            className="flex justify-between items-center bg-white dark:bg-gray-800 px-4 py-3 rounded-xl shadow"
+            className="flex justify-between items-center bg-white dark:bg-gray-800 px-4 py-3 rounded-2xl shadow-md hover:shadow-lg transition"
           >
-            <span className="text-gray-800 dark:text-white">{item.name}</span>
+            <span className="text-gray-800 dark:text-white font-medium">
+              {item.name}
+            </span>
             <span className="text-sm text-gray-500 dark:text-gray-300">
               {item.quantity}
             </span>
@@ -67,31 +65,40 @@ const ShoppingList = () => {
         ))}
       </ul>
 
-      <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-3 sm:space-y-0 max-w-md">
-        <input
-          type="text"
-          placeholder="Item name"
-          className="flex-grow rounded-md border border-gray-300 dark:border-gray-600 px-1 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-600"
-          value={newName}
-          onChange={(e) => setNewName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Quantity (e.g., 2 lbs)"
-          className="w-32 rounded-md border border-gray-300 dark:border-gray-600 px-1 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-600"
-          value={newQuantity}
-          onChange={(e) => setNewQuantity(e.target.value)}
-        />
-        <button
-          onClick={addItem}
-          className="bg-green-600 text-white px-4 py-2 rounded-xl hover:bg-green-700 transition"
-        >
-          Add Item
-        </button>
+      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-md p-6 space-y-4">
+        <div className="flex flex-col sm:flex-row gap-4">
+          <input
+            type="text"
+            placeholder="Item name"
+            className="flex-1 rounded-lg border border-gray-300 dark:border-gray-700 px-4 py-2 text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800 focus:ring-2 focus:ring-green-600 focus:outline-none"
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Quantity (e.g., 2 lbs)"
+            className="w-40 rounded-lg border border-gray-300 dark:border-gray-700 px-4 py-2 text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800 focus:ring-2 focus:ring-green-600 focus:outline-none"
+            value={newQuantity}
+            onChange={(e) => setNewQuantity(e.target.value)}
+          />
+          <button
+            onClick={addItem}
+            className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg transition font-semibold"
+          >
+            + Add
+          </button>
+        </div>
+        {error && <p className="text-red-500 font-medium">{error}</p>}
       </div>
-      <HomeButton />
 
-      {error && <p className="text-red-500 font-medium">{error}</p>}
+      <div className="text-center pt-4">
+        <Link
+          to="/"
+          className="inline-block bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-blue-700 transition font-medium"
+        >
+          ⬅️ Back to Home
+        </Link>
+      </div>
     </motion.div>
   );
 };

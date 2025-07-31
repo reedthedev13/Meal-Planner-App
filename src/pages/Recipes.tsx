@@ -69,14 +69,8 @@ const Recipes = () => {
   };
 
   const saveRecipe = () => {
-    if (!newTitle.trim()) {
-      setError("Title is required.");
-      return;
-    }
-    if (newServings < 1) {
-      setError("Servings must be at least 1.");
-      return;
-    }
+    if (!newTitle.trim()) return setError("Title is required.");
+    if (newServings < 1) return setError("Servings must be at least 1.");
 
     const ingredientsArray = newIngredients
       .split(",")
@@ -96,120 +90,105 @@ const Recipes = () => {
     ]);
 
     setIsAdding(false);
-    setNewTitle("");
-    setNewServings(1);
-    setNewCalories(0);
-    setNewProtein(0);
-    setNewIngredients("");
-    setError("");
   };
 
   const handleDelete = (id: number) => {
     setRecipes((prev) => prev.filter((recipe) => recipe.id !== id));
   };
 
-  const HomeButton = () => (
-    <Link
-      to="/"
-      className="inline-block bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition"
-    >
-      Home
-    </Link>
-  );
-
   return (
     <motion.div
-      className="max-w-5xl mx-auto p-6 space-y-6"
+      className="max-w-7xl mx-auto px-6 py-10 space-y-10"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
-      <h2 className="text-3xl font-bold text-white font-serif ">
-        Your Recipes
-      </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-4xl font-extrabold text-white google-sans-code">Your Recipes</h1>
+        <Link
+          to="/"
+          className="rounded-full px-4 py-2 text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white transition"
+        >
+          Home
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {recipes.map((recipe) => (
           <div
             key={recipe.id}
-            className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4 space-y-2 relative"
+            className="rounded-2xl bg-white/10 backdrop-blur p-6 border border-white/10 shadow-xl text-white hover:scale-[1.01] transition-all duration-200"
           >
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-              {recipe.title}
-            </h3>
-            <p className="text-sm text-gray-500 dark:text-gray-300">
-              Servings: {recipe.servings}
-            </p>
-            <p className="text-sm text-gray-500 dark:text-gray-300">
-              Calories: {recipe.calories}
-            </p>
-            <p className="text-sm text-gray-500 dark:text-gray-300">
-              Protein: {recipe.protein}g
-            </p>
-            <p className="text-sm text-gray-500 dark:text-gray-300">
-              Ingredients: {recipe.ingredients.join(", ")}
-            </p>
+            <div className="space-y-1">
+              <h2 className="text-xl font-semibold">{recipe.title}</h2>
+              <p className="text-sm opacity-80">Servings: {recipe.servings}</p>
+              <p className="text-sm opacity-80">Calories: {recipe.calories}</p>
+              <p className="text-sm opacity-80">Protein: {recipe.protein}g</p>
+              <p className="text-sm opacity-80">
+                Ingredients:{" "}
+                <span className="italic">{recipe.ingredients.join(", ")}</span>
+              </p>
+            </div>
             <button
               onClick={() => handleDelete(recipe.id)}
-              className="flex items-center gap-1 mt-2 text-white bg-red-600 hover:bg-red-700 transition px-3 py-1 rounded-full text-sm"
+              className="mt-4 inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white text-sm px-4 py-1.5 rounded-full transition"
             >
-              <Trash2 className="w-4 h-4" />
+              <Trash2 size={16} />
               Delete
             </button>
           </div>
         ))}
 
         {isAdding && (
-          <div className="bg-white dark:bg-gray-800 shadow rounded-2xl p-4 space-y-3">
+          <div className="rounded-2xl bg-white/10 backdrop-blur p-6 border border-white/10 shadow-xl text-white space-y-4">
+            <h3 className="text-lg font-semibold">Add New Recipe</h3>
             <input
               type="text"
-              placeholder="Recipe title"
-              className="w-full rounded-md border px-3 py-2"
+              placeholder="Title"
+              className="w-full px-3 py-2 rounded-lg bg-white/10 border border-white/20 placeholder:text-white/60"
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
-              autoFocus
             />
             <input
               type="number"
-              min={1}
               placeholder="Servings"
-              className="w-full rounded-md border px-3 py-2"
+              min={1}
+              className="w-full px-3 py-2 rounded-lg bg-white/10 border border-white/20 placeholder:text-white/60"
               value={newServings}
               onChange={(e) => setNewServings(Number(e.target.value))}
             />
             <input
               type="number"
-              min={0}
               placeholder="Calories"
-              className="w-full rounded-md border px-3 py-2"
+              className="w-full px-3 py-2 rounded-lg bg-white/10 border border-white/20 placeholder:text-white/60"
               value={newCalories}
               onChange={(e) => setNewCalories(Number(e.target.value))}
             />
             <input
               type="number"
-              min={0}
               placeholder="Protein (g)"
-              className="w-full rounded-md border px-3 py-2"
+              className="w-full px-3 py-2 rounded-lg bg-white/10 border border-white/20 placeholder:text-white/60"
               value={newProtein}
               onChange={(e) => setNewProtein(Number(e.target.value))}
             />
             <input
               type="text"
               placeholder="Ingredients (comma separated)"
-              className="w-full rounded-md border px-3 py-2"
+              className="w-full px-3 py-2 rounded-lg bg-white/10 border border-white/20 placeholder:text-white/60"
               value={newIngredients}
               onChange={(e) => setNewIngredients(e.target.value)}
             />
-            {error && <p className="text-red-500 text-sm">{error}</p>}
-            <div className="flex space-x-3">
+            {error && <p className="text-red-400 text-sm">{error}</p>}
+            <div className="flex gap-3">
               <button
                 onClick={saveRecipe}
-                className="flex-grow bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700"
+                className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-xl transition"
               >
                 Save
               </button>
               <button
                 onClick={cancelAdding}
-                className="flex-grow bg-gray-400 text-gray-800 px-4 py-2 rounded-xl hover:bg-gray-500"
+                className="w-full bg-white/20 hover:bg-white/30 text-white py-2 rounded-xl transition"
               >
                 Cancel
               </button>
@@ -217,15 +196,17 @@ const Recipes = () => {
           </div>
         )}
       </div>
+
       {!isAdding && (
-        <button
-          onClick={startAdding}
-          className="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition"
-        >
-          + Add Recipe
-        </button>
-      )}{" "}
-      <HomeButton />
+        <div className="flex justify-center">
+          <button
+            onClick={startAdding}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-2xl transition"
+          >
+            + Add New Recipe
+          </button>
+        </div>
+      )}
     </motion.div>
   );
 };

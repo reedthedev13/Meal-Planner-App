@@ -4,35 +4,37 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <motion.div
-      className="p-6 max-w-3xl mx-auto text-center space-y-6"
+      className="min-h-screen flex flex-col justify-center items-center px-4 text-center bg-gradient-to-br from-neutral-950 to-gray-900"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <h1 className="text-5xl font-extrabold font-serif text-orange-400 tracking-tighter leading-relaxed relative">
+      <h1 className="text-4xl md:text-6xl font-extrabold google-sans-code text-white
+       tracking-tight leading-snug mb-4">
         Recipe & Meal Planner
       </h1>
-      <p className="text-lg font-semibold font-serif text-white tracking-tight leading-tights">
-        Plan meals weekly, track nutrition, and create shopping lists easily.
+      <p className="text-base md:text-xl text-gray-300 max-w-xl font-medium mb-10 google-sans-code">
+        Plan your meals, generate shopping lists, and track nutrition — all in one beautiful app.
       </p>
-      <div className="flex justify-center gap-4">
+
+      <div className="flex flex-wrap justify-center gap-4">
         <Link
           to="/recipes"
-          className="bg-indigo-400 text-white px-2 py-2 rounded-xl hover:bg-indigo-700"
+          className="px-6 py-3 bg-indigo-500 hover:bg-indigo-600 text-white rounded-2xl font-semibold transition-all shadow-md hover:shadow-lg google-sans-code"
         >
-          Browse Recipes
+          🍽 Browse Recipes
         </Link>
         <Link
           to="/planner"
-          className="bg-yellow-600 text-white px-2 py-2 rounded-xl hover:bg-yellow-700"
+          className="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-white rounded-2xl font-semibold transition-all shadow-md hover:shadow-lg google-sans-code"
         >
-          Meal Planner
+          🗓 Meal Planner
         </Link>
         <Link
           to="/shopping-list"
-          className="inline-block bg-green-600 text-white px-2 py-2 rounded-xl hover:bg-green-700 transition"
+          className="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl font-semibold transition-all shadow-md hover:shadow-lg google-sans-code"
         >
-          Go to Shopping List
+          🛒 Shopping List
         </Link>
       </div>
     </motion.div>
