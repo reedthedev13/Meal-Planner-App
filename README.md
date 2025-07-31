@@ -1,6 +1,6 @@
 # 🥗 MealPlanner App
 
-A sleek, modern meal planning application built with **React** and **TypeScript**. Users can browse recipes, plan meals for the week, auto-generate shopping lists, and view nutrition information—all in one clean, responsive interface.
+A sleek, modern meal planning application built with **React** and **TypeScript**. Users can browse recipes, plan meals for the week, create shopping lists, and view nutrition information—all in one clean, responsive interface.
 
 ## ⚙️ Tech Stack
 
@@ -16,8 +16,8 @@ A sleek, modern meal planning application built with **React** and **TypeScript*
 - 🍽️ **Browse & Save Recipes**  
   Search, filter, and save your favorite meals.
 
-- 🛒 **Auto-Generated Shopping List**  
-  Automatically compile ingredients based on your weekly plan.
+- 🛒 **Shopping List**  
+  Compile ingredients based on your weekly plan.
 
 - 🧮 **Nutrition Info Viewer**  
   See calories, macros, and other nutrition facts.
