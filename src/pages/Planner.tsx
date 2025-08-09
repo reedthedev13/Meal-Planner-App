@@ -89,7 +89,9 @@ const Planner = () => {
       transition={{ duration: 0.4 }}
     >
       <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-extrabold text-white google-sans-code">Meal Planner</h2>
+        <h2 className="text-3xl font-extrabold text-white google-sans-code">
+          Meal Planner
+        </h2>
         <Link
           to="/"
           className="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition"
@@ -154,14 +156,18 @@ const Planner = () => {
                   type="number"
                   placeholder="Calories"
                   value={form.calories}
-                  onChange={(e) => setForm({ ...form, calories: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, calories: e.target.value })
+                  }
                   className="w-full px-3 py-2 rounded-md border text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 />
                 <input
                   type="number"
                   placeholder="Protein (g)"
                   value={form.protein}
-                  onChange={(e) => setForm({ ...form, protein: e.target.value })}
+                  onChange={(e) =>
+                    setForm({ ...form, protein: e.target.value })
+                  }
                   className="w-full px-3 py-2 rounded-md border text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                 />
                 <input
