@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getRecipes } from "../api/api";
+import { getRecipes, deleteRecipe } from "../api/api";
 import RecipeForm from "../components/RecipeForm";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -44,6 +44,17 @@ const Recipes = () => {
     return <div>Loading recipes...</div>;
   }
 
+  const handleDelete = async (id: string | number) => {
+    if (window.confirm("Are you sure you want to delete this recipe?")) {
+      try {
+        await deleteRecipe(Number(id)); // force convert to number here
+        fetchRecipes();
+      } catch (error: any) {
+        alert("Failed to delete recipe: " + error.message);
+      }
+    }
+  };
+
   return (
     <motion.div
       className="max-w-6xl mx-auto p-6 space-y-6"
@@ -82,7 +93,7 @@ const Recipes = () => {
             recipes.map((recipe) => (
               <div
                 key={recipe.id}
-                className="border border-gray-700 rounded-xl p-5 shadow-md bg-gradient-to-br from-[#0b1120] to-[#1e293b] hover:shadow-lg transition duration-300"
+                className="border border-gray-700 rounded-xl p-5 shadow-md bg-gradient-to-br from-[#0b1120] to-[#1e293b] hover:shadow-lg transition duration-300 relative"
               >
                 <h2 className="text-2xl font-bold text-gray-100 mb-3 google-sans-code tracking-tight">
                   {recipe.title}
@@ -95,6 +106,41 @@ const Recipes = () => {
                   <span className="font-semibold text-gray-200">Calories:</span>{" "}
                   {recipe.calories}
                 </p>
+                <button
+                  onClick={() => handleDelete(recipe.id)}
+                  className="
+    absolute top-4 right-4 
+    bg-red-600 hover:bg-red-700 
+    text-white 
+    px-3 py-1.5 
+    rounded-full 
+    shadow-md 
+    hover:shadow-lg 
+    transition 
+    duration-300 
+    ease-in-out
+    flex items-center justify-center
+    gap-1
+    text-sm
+  "
+                  aria-label={`Delete recipe ${recipe.title}`}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                  Delete
+                </button>
               </div>
             ))
           )}

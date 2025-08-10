@@ -1,8 +1,12 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: "https://mealplanner-backend-p49f.onrender.com/api",
+  baseURL:
+    window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+      ? "http://127.0.0.1:8080/api"  // your local backend URL
+      : "https://mealplanner-backend-p49f.onrender.com/api", // production URL
 });
+
 
 export const getRecipes = async (): Promise<any[]> => {
   try {
