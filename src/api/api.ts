@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080/api', // no /api
+  baseURL: "https://mealplanner-backend-p49f.onrender.com/api",
 });
 
 export const getRecipes = async (): Promise<any[]> => {
