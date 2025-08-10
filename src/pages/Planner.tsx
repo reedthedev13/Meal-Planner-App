@@ -88,15 +88,21 @@ const Planner = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-extrabold text-white google-sans-code">
-          Meal Planner
-        </h2>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 bg-gradient-to-r from-[#0b1120] to-[#111827] rounded-xl shadow-lg border border-gray-800">
+        <div className="flex flex-col gap-1">
+          <h2 className="text-3xl font-extrabold bg-gradient-to-r from-gray-200 to-gray-400 bg-clip-text text-transparent google-sans-code">
+            Meal Planner
+          </h2>
+          <p className="text-gray-400 text-base sm:text-lg google-sans-code tracking-tight">
+            Plan, shop, and cook with ease
+          </p>
+        </div>
+
         <Link
           to="/"
-          className="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700 transition"
+          className="bg-gray-700 hover:bg-gray-600 text-white px-5 py-2 rounded-lg transition font-medium shadow-md border border-gray-600"
         >
-          Home
+          ⬅️ Back to Home
         </Link>
       </div>
 

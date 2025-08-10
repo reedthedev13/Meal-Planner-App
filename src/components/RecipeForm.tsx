@@ -37,45 +37,48 @@ const RecipeForm: React.FC<Props> = ({ onRecipeCreated }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-md max-w-md mx-auto space-y-5"
+      className="bg-gradient-to-br from-[#0b1120] to-[#1e293b] p-6 rounded-2xl shadow-lg max-w-md mx-auto space-y-5 border border-gray-700"
     >
+      <h2 className="text-3xl font-extrabold text-gray-100 google-sans-code mt-2 tracking-tight">
+        Add Recipe
+      </h2>
+
       <div>
-        <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
-          Title
-        </label>
+        <label className="block text-gray-300 font-medium mb-1">Title</label>
         <input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full rounded-lg border border-gray-300 dark:border-gray-700 px-4 py-2 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-600 focus:outline-none"
+          className="w-full rounded-lg border border-gray-600 px-4 py-2 bg-[#111827] text-gray-200 placeholder-gray-400 focus:ring-2 focus:ring-green-500 focus:outline-none"
+          placeholder="Enter recipe title"
           required
         />
       </div>
+
       <div>
-        <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
-          Servings
-        </label>
+        <label className="block text-gray-300 font-medium mb-1">Servings</label>
         <input
           type="number"
           value={servings}
           onChange={(e) =>
             setServings(e.target.value === "" ? "" : Number(e.target.value))
           }
-          className="w-full rounded-lg border border-gray-300 dark:border-gray-700 px-4 py-2 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-600 focus:outline-none"
+          className="w-full rounded-lg border border-gray-600 px-4 py-2 bg-[#111827] text-gray-200 placeholder-gray-400 focus:ring-2 focus:ring-green-500 focus:outline-none"
+          placeholder="Number of servings"
           required
         />
       </div>
+
       <div>
-        <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-1">
-          Calories
-        </label>
+        <label className="block text-gray-300 font-medium mb-1">Calories</label>
         <input
           type="number"
           value={calories}
           onChange={(e) =>
             setCalories(e.target.value === "" ? "" : Number(e.target.value))
           }
-          className="w-full rounded-lg border border-gray-300 dark:border-gray-700 px-4 py-2 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-600 focus:outline-none"
+          className="w-full rounded-lg border border-gray-600 px-4 py-2 bg-[#111827] text-gray-200 placeholder-gray-400 focus:ring-2 focus:ring-green-500 focus:outline-none"
+          placeholder="Calories per serving"
           required
         />
       </div>
@@ -84,7 +87,7 @@ const RecipeForm: React.FC<Props> = ({ onRecipeCreated }) => {
 
       <button
         type="submit"
-        className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg transition"
+        className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white font-semibold py-3 rounded-lg transition shadow-md"
       >
         Create Recipe
       </button>

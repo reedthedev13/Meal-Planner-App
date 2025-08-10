@@ -48,15 +48,15 @@ const MealPlanner: React.FC<MealPlannerProps> = ({
   };
 
   return (
-    <div className="overflow-x-auto">
-      <table className="table-fixed w-full border-collapse border border-[#3d3d42] text-[#fefefe]">
+    <div className="overflow-x-auto rounded-xl shadow-md border border-[#3d3d42] bg-gradient-to-br from-[#0b1120] to-[#1e293b]">
+      <table className="table-fixed w-full border-collapse text-[#fefefe]">
         <thead>
-          <tr>
-            <th className="border border-[#3d3d42] p-2"></th>
+          <tr className="bg-[#111827]">
+            <th className="border border-[#3d3d42] p-3"></th>
             {days.map((day) => (
               <th
                 key={day}
-                className="border border-[#3d3d42] p-2 text-center font-semibold"
+                className="border border-[#3d3d42] p-3 text-center font-semibold tracking-wide text-gray-200"
               >
                 {day}
               </th>
@@ -65,8 +65,8 @@ const MealPlanner: React.FC<MealPlannerProps> = ({
         </thead>
         <tbody>
           {meals.map((meal) => (
-            <tr key={meal}>
-              <td className="border border-[#3d3d42] p-2 font-semibold">
+            <tr key={meal} className="hover:bg-[#162033] transition-colors">
+              <td className="border border-[#3d3d42] p-3 font-semibold text-gray-100">
                 {meal}
               </td>
               {days.map((_, dayIndex) => {
@@ -80,11 +80,11 @@ const MealPlanner: React.FC<MealPlannerProps> = ({
                 return (
                   <td
                     key={dayIndex}
-                    className="border border-[#3d3d42] p-2 text-center align-top"
+                    className="border border-[#3d3d42] p-3 text-center align-top"
                   >
                     {planned ? (
                       <div className="relative">
-                        <span className="block mb-1">
+                        <span className="block mb-2 text-gray-200 font-medium">
                           {planned.recipeTitle}
                         </span>
                         <button
@@ -99,7 +99,7 @@ const MealPlanner: React.FC<MealPlannerProps> = ({
                       <div>
                         <input
                           type="text"
-                          className="w-full p-1 rounded border border-[#ffb86b] text-[#1b1b1f]"
+                          className="w-full p-2 rounded-lg border border-[#ffb86b] bg-gray-800 text-gray-100 placeholder-gray-400 focus:ring-2 focus:ring-[#ffb86b] focus:outline-none"
                           placeholder="Recipe title"
                           value={inputValue}
                           onChange={(e) => setInputValue(e.target.value)}
@@ -109,7 +109,7 @@ const MealPlanner: React.FC<MealPlannerProps> = ({
                           }}
                           autoFocus
                         />
-                        <div className="flex justify-between mt-1">
+                        <div className="flex justify-between mt-2">
                           <button
                             onClick={submitMeal}
                             className="text-[#ffb86b] hover:underline text-sm"
